@@ -67,8 +67,8 @@ var allTLSVersions = map[uint16]struct{}{
 // ServerDefault returns a secure-enough TLS configuration for the server TLS configuration.
 func ServerDefault() *tls.Config {
 	return &tls.Config{
-		// Avoid fallback to SSL protocols < TLS1.0
-		MinVersion:               tls.VersionTLS10,
+		// Avoid fallback to SSL & TLS protocols < TLS1.2
+		MinVersion:               tls.VersionTLS12,
 		PreferServerCipherSuites: true,
 		CipherSuites:             DefaultServerAcceptedCiphers,
 	}
@@ -77,7 +77,7 @@ func ServerDefault() *tls.Config {
 // ClientDefault returns a secure-enough TLS configuration for the client TLS configuration.
 func ClientDefault() *tls.Config {
 	return &tls.Config{
-		// Prefer TLS1.2 as the client minimum
+		// TLS1.2 as the client minimum to match server's minimum
 		MinVersion:   tls.VersionTLS12,
 		CipherSuites: clientCipherSuites,
 	}
